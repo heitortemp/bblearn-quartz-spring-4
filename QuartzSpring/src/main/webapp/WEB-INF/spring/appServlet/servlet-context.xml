@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    					http://www.springframework.org/schema/mvc 
+    					http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+    					http://www.springframework.org/schema/context 
+    					http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    					http://www.springframework.org/schema/tx  
+               			http://www.springframework.org/schema/tx/spring-tx.xsd
+               			http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<!-- Handles configuring the bean factory to handle auto-wiring some default 
+		Learn types like Loaders, services and extensions. -->
+	<bean id="customAutowireBeanFactoryProcessor"
+		class="blackboard.platform.spring.beans.CustomAutowireBeanFactoryProcessor" />
+
+	<!-- Tells Spring that we're using annotations on our classes. -->
+	<context:annotation-config />
+
+	<!-- Include the default set of argument resolvers to handle Id objects, 
+		standard Learn types like User and Context values. -->
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean
+				class="blackboard.platform.spring.web.resolvers.DefaultArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+	<context:component-scan
+		base-package="blackboard.platform.spring, com.heitortemp.quartzspring." />
+
+	
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:default-servlet-handler />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	
+		<!-- For times when you just need to invoke a method on a specific object -->
+	<bean id="simpleJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="myBean" />
+		<property name="targetMethod" value="log" />
+	</bean>
+
+	<!-- Run the job every 5 seconds only on Weekends -->
+	<bean id="cronTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="simpleJobDetail" />
+		<property name="cronExpression" value="0 0/3 * * * ? *" />
+	</bean>
+
+	<!-- Scheduler factory bean to glue together jobDetails and triggers to 
+		Configure Quartz Scheduler -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="simpleJobDetail" />
+			</list>
+		</property>
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger" />
+			</list>
+		</property>
+	</bean>
+</beans>

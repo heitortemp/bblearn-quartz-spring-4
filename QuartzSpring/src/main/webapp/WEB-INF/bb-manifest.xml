@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.blackboard.com/bb-manifest-plugin"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.blackboard.com/bb-manifest-plugin https://bbprepo.blackboard.com/content/repositories/releases/blackboard/platform/bb-manifest-plugin/3000.1.0-rel.52/bb-manifest-plugin-3000.1.0-rel.52.xsd">
+	<plugin>
+		<name value="Quartz Example" />
+		<handle value="quartz-example" />
+		<description value="B2 Histórico do Aluno na Plataforma." />
+		<version value="1.0.3" />
+
+		<requires>
+			<bbversion value="9.1" max="3000.1.3-rel.70" />
+		</requires>
+
+		<vendor>
+			<id value="ht" />
+			<name value="Heitor Silva Temp" />
+			<url value="https://github.com/heitortemp/" />
+			<description value="" />
+		</vendor>
+
+		<http-actions>
+			<config value="home"></config>
+		</http-actions>
+
+		<application-defs>
+			<application handle="quartz-example" name="Oficina de Projetos"
+				type="shared" use-ssl="false">
+				<description lang="en_US"></description>
+				<links>
+					<link>
+						<type value="system_tool"></type>
+						<name value="Quartz Example"></name>
+						<url value="config"></url>
+					</link>
+				</links>
+			</application>
+		</application-defs>
+
+		<!-- Custom Content Types -->
+		<content-handlers>
+		</content-handlers>
+
+		<!-- code permissions required for proper operation -->
+		<permissions>
+			<permission type="attribute" name="user.authinfo" actions="get,set" />
+			<permission type="attribute" name="user.personalinfo"
+				actions="get,set" />
+			<permission type="java.io.FilePermission"
+				name="&amp;lt;&amp;lt;ALL FILES&amp;gt;&amp;gt;" actions="read,write" />
+			<permission type="java.util.PropertyPermission" name="*"
+				actions="read,write" />
+			<permission type="runtime" name="accessClassInPackage.*" />
+			<permission type="runtime" name="accessDeclaredMembers" />
+			<permission type="runtime" name="getClassLoader" />
+			<permission type="runtime" name="createClassLoader" />
+			<permission type="runtime" name="getProtectionDomain" />
+			<permission type="java.lang.reflect.ReflectPermission"
+				name="suppressAccessChecks" />
+			<permission type="java.lang.RuntimePermission" name="accessDeclaredMembers" />
+			<permission type="java.lang.RuntimePermission" name="createClassLoader" />
+			<permission type="java.lang.RuntimePermission" name="setContextClassLoader" />
+		</permissions>
+	</plugin>
+</manifest>

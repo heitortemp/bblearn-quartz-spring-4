@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.heitortemp</groupId>
+	<name>Quartz Example</name>
+	<packaging>war</packaging>
+	<version>1.0.0</version>
+	<organization>
+    	<name>Grupo A</name>
+    	<url>www.grupoa.com.br</url>
+    </organization>
+	<properties>
+		<!-- Host para deploy do B2 -->
+		<bb-host>http://localhost:9876</bb-host>
+		<blackboard.platform-version>3000.1.0-rel.52</blackboard.platform-version>
+
+		<!-- Generic properties -->
+		<java.version>1.8</java.version>
+
+		<!-- Web -->
+		<jsp.version>2.2</jsp.version>
+		<jstl.version>1.2</jstl.version>
+		<servlet.version>2.5</servlet.version>
+
+		<!-- Spring -->
+		<org.springframework-version>4.2.0.RELEASE</org.springframework-version>
+
+		<!-- Logging -->
+		<org.slf4j-version>1.7.12</org.slf4j-version>
+
+		<org.aspectj-version>1.7.4</org.aspectj-version>
+		
+		<!-- Quartz -->
+		<quartz.version>2.2.3</quartz.version>
+	</properties>
+	
+	<!-- Blackboard repo -->
+	<repositories>
+		<repository>
+			<id>bb</id>
+			<name>Blackboard Repository</name>
+			<url>https://maven.blackboard.com/content/repositories/releases/</url>
+		</repository>
+	</repositories>
+
+	<!-- Blackboard plugin repo -->
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>bb</id>
+			<name>Blackboard Repository</name>
+			<url>https://maven.blackboard.com/content/repositories/releases/</url>
+		</pluginRepository>
+	</pluginRepositories>
+	
+	<dependencies>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- @Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Blackboard -->
+		<dependency>
+			<groupId>blackboard.platform</groupId>
+			<artifactId>bb-taglibs</artifactId>
+			<version>${blackboard.platform-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>blackboard.platform</groupId>
+			<artifactId>bb-platform</artifactId>
+			<version>${blackboard.platform-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>blackboard.platform</groupId>
+			<artifactId>bb-cms-admin</artifactId>
+			<version>${blackboard.platform-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>blackboard.platform</groupId>
+			<artifactId>bb-spring-webapi</artifactId>
+			<version>${blackboard.platform-version}</version>
+		</dependency>
+		 <!-- Quartz framework -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>
+	</dependencies>
+ 	<build>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<plugins>
+			<!-- The following task is called by executing 'mvn antrun:run' -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.oscelot</groupId>
+						<artifactId>b2deploy-task</artifactId>
+						<version>0.1.0</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<!-- The b2deploy task automatically deploys the -->
+					<!-- war file onto the development server. -->
+					<target>
+						<taskdef name="b2deploy" classpathref="maven.plugin.classpath"
+							classname="org.oscelot.ant.B2DeployTask" />
+						<b2deploy
+							localfilepath="${project.basedir}/target/${project.artifactId}-${project.version}.war"
+							host="${bb-host}" courseorgavailable="true" clean="true" />
+					</target>
+					<!-- Requires "Starting Block 1.2.3 with Upload" installed on the server. -->
+					<!-- Download "bb-starting-block-123.war" from -->
+					<!-- https://behind.blackboard.com/s/developer/dlc/download.aspx?d=1335 -->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+ 	<artifactId>quartz-example</artifactId>
+</project>
